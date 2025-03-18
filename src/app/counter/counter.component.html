@@ -1,0 +1,8 @@
+<div class="counter-container">
+    <h1>Counter: {{count}}</h1>
+
+    <button (click)="counterFunction('increment')">Increment</button>
+    <button (click)="counterFunction('decrement')" [ngClass]="{'button-disabled': count===0}"  [disabled]="count===0">Decrement</button>
+    <button (click)="counterFunction('reset')" [ngClass]="{'button-disabled': count===0}" [disabled]="count===0">Reset</button>
+    
+  </div>
