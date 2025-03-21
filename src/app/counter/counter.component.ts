@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-counter',
@@ -6,38 +7,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./counter.component.css']
 })
 export class CounterComponent implements OnInit {
+  private counterSubject = new BehaviorSubject<number>(0);
+  counter$ = this.counterSubject.asObservable();
+  count: number = 0;
 
   constructor() {
-    
+    this.counter$.subscribe(value => this.count = value);
    }
 
   ngOnInit(): void {
   }
 
-  count: number = 0;
-/*
-increment(){
-  this.count++;
-}
-
-decrement(){
-  this.count--;
-}
-
-reset(){
-  this.count = 0;
-}
-*/
   counterFunction(type: 'increment' | 'decrement' | 'reset') {
     switch (type) {
       case 'increment':
-        this.count++;
+        this.counterSubject.next(this.counterSubject.value + 1);
         break;
       case 'decrement':
-        this.count--;
+        this.counterSubject.next(this.counterSubject.value - 1);
         break;
       case 'reset':
-        this.count = 0;
+        this.counterSubject.next(0);
         break;
     }
   }
